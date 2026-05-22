@@ -1,0 +1,30 @@
+# Secrets
+.env
+
+# Virtualenv
+venv/
+.venv/
+/home/egiabot/venvs/
+
+# Dati e modello (troppo grandi / rigenerabili)
+data/raw/
+data/processed/
+models/
+*.joblib
+
+# Database locale
+*.db
+*.sqlite
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.pytest_cache/
+
+# Editor
+.vscode/
+.idea/
+
+# Streamlit
+.streamlit/
