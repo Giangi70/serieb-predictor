@@ -1,79 +1,47 @@
 # Serie B Predictor
 
-Predice l'esito (1/X/2) delle partite di Serie B usando le quote dei bookmaker come feature di input per un modello ML.
+Predice l'esito (1/X/2) delle partite di **Serie B italiana** usando le quote dei bookmaker come feature per un modello ML (XGBoost).
 
-Progetto gemello di [seriea-predictor](https://github.com/Giangi70/seriea-predictor), adattato per la Serie B italiana.
+Parte dell'ecosistema [Betting](https://github.com/Giangi70/betting-core) multi-sport.
 
-## Motivazione
-
-La Serie B è un mercato meno seguito rispetto alla Serie A: meno scommettitori, meno attenzione dei bookmaker, modelli interni meno raffinati. Questo si traduce in più inefficienze potenziali da sfruttare.
-
-**CV accuracy modello: ~43%** (vs ~51% Serie A) — la Serie B è più imprevedibile, il che conferma che i bookmaker la prezzano con meno precisione.
-
-## Stack
-
-| Componente | Tecnologia |
-|---|---|
-| Linguaggio | Python 3.11+ |
-| ML | XGBoost + scikit-learn |
-| UI | Streamlit (porta 8502) |
-| Database locale | SQLite |
-| Quote live | The Odds API (`soccer_italy_serie_b`) |
-| Dati storici | football-data.co.uk (`I2.csv`) |
-
-## Struttura progetto
-
-```
-serieb-predictor/
-├── config/config.py           # Configurazione (I2.csv, endpoint Serie B)
-├── data/raw/                  # CSV storici serie_b_XXXX.csv
-├── data/processed/            # Dataset preprocessato
-├── models/model.joblib        # Modello XGBoost addestrato
-├── notebooks/                 # Analisi esplorative (ereditate da Serie A)
-├── src/                       # Codice sorgente (identico a Serie A)
-└── start.sh                   # Avvio rapido (porta 8502)
-```
-
-## Avvio rapido
+## Quick Start
 
 ```bash
+git clone https://github.com/Giangi70/serieb-predictor
+cd serieb-predictor
+python3 -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
+cp .env.example .env   # inserisci ODDS_API_KEY (opzionale)
 ./start.sh
 ```
 
-Apre l'app su `http://localhost:8502`.
+L'app si apre su **http://localhost:8502**
 
-## Setup manuale
+## Dati
 
-```bash
-# Virtualenv
-python3 -m venv /home/egiabot/venvs/serieb-predictor
-source /home/egiabot/venvs/serieb-predictor/bin/activate
-pip install -r requirements.txt
+- **Storici**: [football-data.co.uk](https://www.football-data.co.uk) — 9 stagioni (2016/17→2024/25), ~3500 partite
+- **Quote live**: [The Odds API](https://the-odds-api.com) — endpoint `soccer_italy_serie_b`
+- **CV accuracy modello**: ~43% (mercato meno efficiente della Serie A → più edge potenziale)
 
-# Dati e modello
-PYTHONPATH=. python src/scraper/download_historical.py
-PYTHONPATH=. python src/training/train.py
+## Funzionalità
 
-# App
-PYTHONPATH=. streamlit run src/ui/app.py --server.port 8502
-```
+| Tab | Descrizione |
+|---|---|
+| 🔮 Predizioni giornata | Quote live → predizioni 1/X/2 con probabilità |
+| ✏️ Inserimento manuale | Inserisci quote a mano per una singola partita |
+| 🔄 Aggiorna dataset | Scarica nuovi dati e ri-addestra il modello |
+| 📊 Storico | Predizioni passate, risultati reali, ROI value bet |
+| 🎯 Strategia Mista | Segnali 9-safe+1-jolly con monitor ROI stagionale |
 
-## Dati storici
+## Ecosistema
 
-Fonte: [football-data.co.uk](https://www.football-data.co.uk/italym.php) — file `I2.csv`
+Questo progetto fa parte di un ecosistema multi-sport:
 
-9 stagioni disponibili: 2016/17 → 2024/25 (3534 partite dopo preprocessing).
-
-## Differenze rispetto a seriea-predictor
-
-| Parametro | Serie A | Serie B |
+| Progetto | Campionato | Porta |
 |---|---|---|
-| File CSV | `I1.csv` | `I2.csv` |
-| API endpoint | `soccer_italy_serie_a` | `soccer_italy_serie_b` |
-| Porta Streamlit | 8501 | 8502 |
-| CV accuracy | ~51% | ~43% |
-| DB file | `seriea.db` | `serieb.db` |
-
-## Parte dell'ecosistema Betting
-
-Questo progetto fa parte di un ecosistema multi-sport. Vedi `/home/egiabot/PROJECT/BettingEcosystem.md`.
+| [seriea-predictor](https://github.com/Giangi70/seriea-predictor) | Serie A Italia | 8501 |
+| [serieb-predictor](https://github.com/Giangi70/serieb-predictor) | Serie B Italia | 8502 |
+| [laliga2-predictor](https://github.com/Giangi70/laliga2-predictor) | La Liga 2 Spagna | 8503 |
+| [bundesliga2-predictor](https://github.com/Giangi70/bundesliga2-predictor) | Bundesliga 2 Germania | 8504 |
+| [betting-core](https://github.com/Giangi70/betting-core) | Libreria condivisa | — |
