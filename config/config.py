@@ -15,4 +15,6 @@ cfg = PredictorConfig(
     odds_api_key=os.getenv("ODDS_API_KEY", ""),
     base_dir=Path(__file__).parent.parent,
     streamlit_port=8502,
+    api_port=8002,
+    api_key=os.getenv("API_KEY", ""),
 )

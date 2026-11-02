@@ -9,6 +9,7 @@ venv/
 # Dati e modello (troppo grandi / rigenerabili)
 data/raw/
 data/processed/
+data/exports/
 models/
 *.joblib
 
