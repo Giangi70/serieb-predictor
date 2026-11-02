@@ -6,14 +6,13 @@ venv/
 .venv/
 /home/egiabot/venvs/
 
-# Dati e modello (troppo grandi / rigenerabili)
-data/raw/
-data/processed/
+# Dati e modello
+# NOTA: per il deploy su Streamlit Cloud, modello + dataset + CSV storici
+# SONO versionati (l'app cloud parte da clone pulito e deve trovarli pronti).
+# Restano esclusi solo gli export rigenerabili.
 data/exports/
-models/
-*.joblib
 
-# Database locale
+# Database locale (SQLite non persiste su Streamlit Cloud comunque)
 *.db
 *.sqlite
 
@@ -27,5 +26,5 @@ __pycache__/
 .vscode/
 .idea/
 
-# Streamlit
-.streamlit/
+# Streamlit — versiona config.toml, escludi i secrets
+.streamlit/secrets.toml
