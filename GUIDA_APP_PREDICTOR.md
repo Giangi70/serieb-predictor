@@ -99,6 +99,44 @@ La strategia operativa **9 safe + 1 jolly**:
 
 ---
 
+## Flusso settimanale (come costruire lo storico e il ROI)
+
+Il ciclo giornata per giornata è questo:
+
+```
+GIORNATA N — prima che si gioghi
+  Tab "Predizioni giornata" → Carica quote
+     → le predizioni vengono SALVATE AUTOMATICAMENTE nel DB
+       (non devi fare altro: le ritrovi subito in tab "Storico" con Risultato vuoto)
+
+DOPO che le partite si sono giocate (di solito la giornata dopo)
+  Tab "Storico" → Aggiorna risultati
+     → compila l'esito reale (H/D/A) delle partite che avevi predetto
+     → solo ora il ROI e le statistiche si aggiornano
+  (in alternativa puoi inserire l'esito a mano, sempre in tab Storico)
+```
+
+### Attenzione: NON è "Aggiorna dataset"
+Due nomi simili, due cose diverse:
+- **Storico → Aggiorna risultati** = registra gli ESITI REALI delle tue predizioni ← **questo serve per lo storico/ROI**
+- **Aggiorna dataset** = riscarica i CSV e RI-ALLENA il modello ← manutenzione del modello, NON lo storico
+
+### Chiarimento sul "servono ≥ 20 scommesse"
+Quel 20 **non sono 20 giornate**: sono 20 **scommesse con esito registrato**. Una predizione
+salvata ma senza risultato NON conta. Il contatore sale solo dopo "Aggiorna risultati".
+
+### ⚠️ Lo storico persiste SOLO in locale
+Su **Streamlit Cloud** il database SQLite **si azzera a ogni riavvio** dell'app (e il cloud
+gratuito si riavvia spesso, dopo inattività o throttle). Quindi:
+- **app online** → ottima per *consultare* le predizioni della giornata; lo storico NON si accumula
+- **app in locale** (`./start.sh`) → qui il file `data/*.db` è permanente: è l'unico posto dove
+  costruire davvero lo storico ROI settimana dopo settimana
+
+Per avere lo storico persistente anche online servirebbe un database esterno (es. Postgres
+gratuito) al posto di SQLite — sviluppo futuro, non ancora implementato.
+
+---
+
 ## Riepilogo rapido
 
 | Voglio... | Dove |
@@ -106,6 +144,6 @@ La strategia operativa **9 safe + 1 jolly**:
 | Vedere le predizioni della prossima giornata | Tab Predizioni → Carica quote |
 | Provare una partita con quote mie | Tab Inserimento manuale |
 | Tenere aggiornato il modello | Tab Aggiorna dataset (in locale) |
-| Registrare gli esiti reali e vedere il ROI | Tab Storico → Aggiorna risultati |
+| Registrare gli esiti reali e vedere il ROI | Tab Storico → Aggiorna risultati (in locale) |
 | Le scommesse consigliate (safe + jolly) | Tab Strategia Mista |
 | Cambiare/controllare la API key | the-odds-api.com (dashboard) + Secrets/​.env |
