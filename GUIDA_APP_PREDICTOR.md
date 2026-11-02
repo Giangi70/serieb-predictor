@@ -44,6 +44,35 @@ Il sito è in inglese. Passi:
 
 ---
 
+## 1-bis) I due interruttori nella sidebar (Impostazioni)
+
+Nella barra laterale a sinistra ci sono due toggle on/off. Sono **indipendenti** tra loro.
+
+### 🔘 "Usa dati di esempio (no API key)"
+Sceglie **da dove arrivano le quote** quando premi "Carica quote":
+- **ON** → quote **finte** (mock): NON chiama The Odds API, NON consuma richieste, funziona senza chiave.
+  Utile per **provare** l'app. (Se vedi quote strane/inventate, è questo toggle acceso.)
+- **OFF** → quote **reali** scaricate da The Odds API.
+
+Il valore iniziale è automatico: parte **ON se non c'è la chiave**, OFF se la chiave è presente.
+Per l'uso reale tienilo **OFF**.
+
+### 🔘 "Kelly criterion"
+Riguarda **quanto scommettere** (lo stake), non la predizione:
+- **OFF** → l'app indica solo *quali* sono le value bet, senza importi.
+- **ON** → compare il campo **"Bankroll (€)"** (il tuo capitale, default 100) e per ogni value bet
+  l'app calcola lo **stake consigliato** con la formula di Kelly.
+
+Il **criterio di Kelly** è una formula che dice quale frazione del capitale puntare per far crescere
+il bankroll in modo ottimale nel lungo periodo: più la scommessa ha valore atteso alto, più suggerisce
+di puntare; se il vantaggio è piccolo, suggerisce poco. Serve a dimensionare le puntate razionalmente.
+
+```
+stake = ( p·b − (1−p) ) / b  ×  bankroll      (p = probabilità stimata, b = quota − 1)
+```
+
+---
+
 ## 2) Il pulsante "Carica quote"
 
 Nella tab **Predizioni giornata**. Cliccandolo l'app:
@@ -146,4 +175,6 @@ gratuito) al posto di SQLite — sviluppo futuro, non ancora implementato.
 | Tenere aggiornato il modello | Tab Aggiorna dataset (in locale) |
 | Registrare gli esiti reali e vedere il ROI | Tab Storico → Aggiorna risultati (in locale) |
 | Le scommesse consigliate (safe + jolly) | Tab Strategia Mista |
+| Usare quote vere (non finte) | Sidebar → "Usa dati di esempio" OFF |
+| Farmi suggerire quanto puntare | Sidebar → "Kelly criterion" ON + Bankroll |
 | Cambiare/controllare la API key | the-odds-api.com (dashboard) + Secrets/​.env |
