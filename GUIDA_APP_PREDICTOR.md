@@ -8,9 +8,9 @@ e cosa fa ogni tab. Le app sono identiche: cambia solo il campionato.
 | App | URL |
 |---|---|
 | Serie A | https://seriea-predictor-app.streamlit.app/ |
-| Serie B | (da deployare — `serieb-predictor` su share.streamlit.io) |
-| La Liga 2 | (da deployare — `laliga2-predictor`) |
-| Bundesliga 2 | (da deployare — `bundesliga2-predictor`) |
+| Serie B | https://serieb-predictor-app.streamlit.app/ |
+| La Liga 2 | https://laliga2-predictor-app.streamlit.app/ |
+| Bundesliga 2 | https://bundesliga2-predictor-app.streamlit.app/ |
 
 ---
 
